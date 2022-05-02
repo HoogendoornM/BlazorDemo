@@ -1,0 +1,27 @@
+﻿@page "/demo"
+
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<h2>Conway's Game of Life</h2>
+
+<div id='container'></div>
+@functions {
+
+    async void setP5()
+    {
+        await JSRuntime.InvokeAsync<object>("setp5");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // execute conditionally for loading data, otherwise this will load
+        // every time the page refreshes
+        if (firstRender)
+        {
+            // Do work to load page data and set properties
+            JSRuntime.InvokeAsync<object>("setp5");
+        }
+    }
+
+}
